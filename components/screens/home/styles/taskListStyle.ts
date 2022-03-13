@@ -7,8 +7,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   title: {
-    marginLeft: "auto",
-    marginRight: "auto",
+    marginLeft: 10,
     fontSize: 18,
     marginBottom: 10,
     fontFamily: "Poppins-Medium"

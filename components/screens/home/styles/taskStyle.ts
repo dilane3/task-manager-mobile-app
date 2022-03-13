@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingLeft: 5
   },
   tastText: {
     width: Dimensions.get("window").width - 110,
