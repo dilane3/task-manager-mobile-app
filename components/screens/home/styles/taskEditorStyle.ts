@@ -2,15 +2,16 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    top: 0,
-    left: 0,
     width: "100%",
     height: "auto",
     paddingHorizontal: 10,
     paddingVertical: 10,
     backgroundColor: "#fff",
-    elevation: 5,
+    elevation: 7,
+  },
+  editorTitle: {
+    fontFamily: "Poppins-Medium",
+    fontSize: 14
   },
   editor: {
     flexDirection: "row",
@@ -23,7 +24,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: "#cacaca",
-    borderRadius: 5
+    borderRadius: 5,
+    fontFamily: "Poppins-Regular",
+    paddingTop: 5
   },
   btn: {
     width: 75,
@@ -42,7 +45,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "#fff",
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: "Poppins-Regular",
+    marginTop: 5
   }
 })
 

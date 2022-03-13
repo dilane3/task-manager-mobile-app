@@ -1,11 +1,11 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons'
-import styles from "./taskEditorStyle"
+import styles from "./styles/taskEditorStyle"
 
 const TaskEditor = () => {
   return (
     <View style={styles.container}>
-      <Text>New Task</Text>
+      <Text style={styles.editorTitle}>New Task</Text>
 
       <View style={styles.editor}>
         <TextInput style={styles.textInput} placeholder="Add new task" selectionColor="#3e4bff" />

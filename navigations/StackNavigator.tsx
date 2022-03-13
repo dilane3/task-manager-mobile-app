@@ -19,6 +19,10 @@ const StackNavigator = () => {
         name="Home"
         component={HomeScreen}
         options={{
+          headerTitleStyle: {
+            fontFamily: "Poppins-Bold",
+            color: "#fff"
+          },
           headerTitle: "Tasks Manager",
           headerShadowVisible: false
         }}
