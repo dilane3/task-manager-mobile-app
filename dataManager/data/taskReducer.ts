@@ -1,9 +1,9 @@
-import { ADD_TASK } from './type';
+import { ADD_TASK, MARK_TASK } from './type';
 import Task from '../../entities/task';
 
 type ActionType = {
   type: String,
-  payload?: String | Boolean | { id: String, value: String | Boolean }
+  payload?: String | Boolean | { id: number, value: String | Boolean }
 }
 
 type TaskReducerType = (state: Array<Task>, action: ActionType) => Array<Task>
@@ -24,9 +24,32 @@ const taskReducer: TaskReducerType = (state, action) => {
         // Add the task
         stateClone.push(task)
 
-        console.log({stateClone, task})
-
         return stateClone
+      }
+
+      return state
+    }
+
+    case MARK_TASK: {
+      if (action.payload) {
+        const {
+          id,
+          value
+        } = action.payload as { id: number, value: boolean }
+
+        // Get the index (position) of the given task
+        const index = state.findIndex(task => task.getId === id)
+
+        // Condition if the task exist
+        if (index > -1) {
+          // Clone the state
+          const stateClone = [...state]
+
+          // Set the state of the task
+          stateClone[index].setMarked(value)
+
+          return stateClone
+        }
       }
 
       return state

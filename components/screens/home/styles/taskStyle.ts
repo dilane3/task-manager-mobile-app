@@ -17,12 +17,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 5
   },
-  tastText: {
+  taskText: {
     width: Dimensions.get("window").width - 110,
     fontSize: 14,
     marginLeft: 10,
     color: "#444",
     fontFamily: "Poppins-Regular"
+  },
+  taskMaked: {
+    textDecorationStyle: "solid",
+    textDecorationLine: "line-through",
+    color: "#828282"
   },
   taskMenu: {
     marginRight: 10,

@@ -5,9 +5,8 @@ import styles from "./styles/taskListStyle"
 import Task from "./task"
 
 const TaskList = () => {
+  // Get data from the global state
   const { tasks } = useContext(taskContext)
-
-  console.log({ tasks })
 
   return (
     <ScrollView style={styles.container}>

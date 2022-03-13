@@ -48,14 +48,14 @@ class Task {
   /**
    * Set the value of the task
    */
-  set setValue(value: String) {
+  setValue(value: String) {
     this.value = value
   }
 
   /**
    * Set the state of the task
    */
-  set setMarked(value: boolean) {
+  setMarked(value: boolean) {
     this.marked = value
   }
 }

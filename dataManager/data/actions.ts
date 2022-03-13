@@ -13,7 +13,7 @@ const addTask: (value: String) => ActionType = (value) => {
   }
 }
 
-const markTask: (id: String, value: Boolean) => ActionType = (id, value) => {
+const markTask: (id: number, value: Boolean) => ActionType = (id, value) => {
   return {
     type: MARK_TASK,
     payload: {
@@ -30,7 +30,7 @@ const deleteTask: (id: String) => ActionType = (id) => {
   }
 }
 
-const updateTask: (id: String, value: String) => ActionType = (id, value) => {
+const updateTask: (id: number, value: String) => ActionType = (id, value) => {
   return {
     type: UPDATE_TASK,
     payload: {
