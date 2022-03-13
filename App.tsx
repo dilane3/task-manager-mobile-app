@@ -4,17 +4,20 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import RootNavigator from './navigations'
 import useCustomFonts from './utils/loadFonts';
+import TaskProvider from './dataManager/providers/taskProvider';
 
 export default function App() {
   const [fontLoaded] = useCustomFonts()
 
   return (
-    <React.Fragment>
-      {
-        fontLoaded && <RootNavigator />
-      }
+    <TaskProvider>
+      <React.Fragment>
+        {
+          fontLoaded && <RootNavigator />
+        }
 
-      <StatusBar style='light' />
-    </React.Fragment>
+        <StatusBar style='light' />
+      </React.Fragment>
+    </TaskProvider>
   );
 }

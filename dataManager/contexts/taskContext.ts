@@ -1,4 +1,4 @@
-import { Task } from './type';
+import Task from "../../entities/task";
 import { createContext, Dispatch, DispatchWithoutAction } from "react";
 import { ActionType } from '../data/taskReducer';
 
