@@ -8,8 +8,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderColor: '#c4c4c4',
-    borderTopWidth: 1,
-    paddingVertical: 10
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+  },
+  containerIn: {
+    position: "relative",
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    backgroundColor: "#fff"
+  },
+  containerBackgroundIcon: {
+    height: "100%",
+    width: 70,
+    justifyContent: "center",
+    alignItems: "center"
   },
   leftSection: {
     width: Dimensions.get("window").width - 50,

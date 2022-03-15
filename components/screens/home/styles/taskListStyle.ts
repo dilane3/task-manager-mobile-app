@@ -7,11 +7,13 @@ const styles = StyleSheet.create({
     marginTop: 170
   },
   title: {
-    marginLeft: 10,
+    paddingLeft: 10,
     fontSize: 18,
-    marginBottom: 10,
+    paddingBottom: 10,
     marginTop: 20,
-    fontFamily: "Poppins-Medium"
+    fontFamily: "Poppins-Medium",
+    borderColor: '#c4c4c4',
+    borderBottomWidth: 1,
   },
   taskList: {
     width: "100%",

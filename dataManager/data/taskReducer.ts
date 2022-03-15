@@ -13,7 +13,7 @@ const taskReducer: TaskReducerType = (state, action) => {
     case ADD_TASK: {
       if (action.payload && typeof action.payload === 'string') {
         // Generate a new id
-        const id = state.length === 0 ? 1 : state[state.length - 1].getId + 1
+        const id = state.length === 0 ? 1 : state[0].getId + 1
 
         // Create a new task
         const task = new Task(id, action.payload)
@@ -22,7 +22,7 @@ const taskReducer: TaskReducerType = (state, action) => {
         const stateClone = [...state]
 
         // Add the task
-        stateClone.push(task)
+        stateClone.unshift(task)
 
         return stateClone
       }
