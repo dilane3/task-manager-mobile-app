@@ -20,16 +20,24 @@ import React, { useContext, useEffect } from 'react'
 import navigationContext from '../../dataManager/contexts/navigationContext'
 import styles from '../screens/home/styles/bottomHalfModalStyle'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import taskContext from '../../dataManager/contexts/taskContext'
+import { deleteTask } from '../../dataManager/data/actions'
 
 type BottomHalfModalItemPropType = {
   icon: "trash" | "pencil",
   text: string,
-  color: string
+  color: string,
+  onPress?: () => void
 }
 
-const BottomHalfModalItem = ({ icon, text, color }: BottomHalfModalItemPropType) => {
+type contextType = {
+  startTop: number
+}
+
+const BottomHalfModalItem = ({ icon, text, color, onPress }: BottomHalfModalItemPropType) => {
+
   return (
-    <TouchableOpacity onPress={() => {console.log("hello")}} style={styles.modalItem}>
+    <TouchableOpacity onPress={onPress} style={styles.modalItem}>
       <React.Fragment>
         <Ionicons color={color} size={25} style={styles.modalItemIcon} name={icon} />
 
@@ -40,20 +48,29 @@ const BottomHalfModalItem = ({ icon, text, color }: BottomHalfModalItemPropType)
 }
 
 const BottomHalfModal = () => {
+  // Get data from the global state
   const { modalVisible, changeModalVisible } = useContext(navigationContext)
+  const { currentTask, dispatch } = useContext(taskContext)
+
+  // Use dimensions values
   const dimensions = useWindowDimensions()
 
   const HEIGHT = dimensions.height
   const MIDDLE = HEIGHT - 150
 
+  // Define a shared value for animation
   const top = useSharedValue(HEIGHT)
 
+  // useEffect section
   useEffect(() => {
     if (modalVisible) {
       top.value = MIDDLE
+    } else {
+      top.value = HEIGHT
     }
   }, [modalVisible])
 
+  // Define animated styles
   const style = useAnimatedStyle(() => {
     return {
       top: withSpring(
@@ -77,7 +94,7 @@ const BottomHalfModal = () => {
     return {
       opacity: withSpring(
         interpolate(top.value, 
-          [MIDDLE, HEIGHT - 120],
+          [MIDDLE, HEIGHT],
           [.6, 0],
           "clamp"
         )
@@ -97,21 +114,22 @@ const BottomHalfModal = () => {
     changeModalVisible()
   }
 
-  type contextType = {
-    startTop: number
-  }
-
+  // Define an event handle for Pan Responder
   const eventHandler = useAnimatedGestureHandler({
     onStart: (_, context: contextType) => {
+      // Set a context animation value
       context.startTop = top.value
     },
     onActive: (event, context) => {
+      // Update the position of the bottom modal
       top.value = context.startTop + event.translationY
     },
     onEnd: () => {
+      // Some logic while event ended
       if (top.value > MIDDLE + 100) {
         top.value = HEIGHT
 
+        // Run something on the JS thread
         runOnJS(changeModalVisibleWrapper)()
       } else if (top.value < MIDDLE - 100) {
         console.log("La")
@@ -121,6 +139,16 @@ const BottomHalfModal = () => {
       }
     }
   })
+
+  // Some handlers
+  const handleDeleteTask = () => {
+    console.log("Hey")
+    // Hide modal
+    changeModalVisible()
+    
+    if (currentTask)
+      dispatch(deleteTask(currentTask.getId))
+  }
 
   return (
     <>
@@ -137,7 +165,12 @@ const BottomHalfModal = () => {
             style={styles.modalContainer}
           >
             <BottomHalfModalItem icon="pencil" text="Update Task" color="#212529" />
-            <BottomHalfModalItem icon="trash" text="Delete Task" color="#ef233c" />
+            <BottomHalfModalItem 
+              icon="trash" 
+              text="Delete Task" 
+              color="#ef233c" 
+              onPress={handleDeleteTask}  
+            />
           </ScrollView>
         </Animated.View>
       </PanGestureHandler>

@@ -10,7 +10,7 @@ const NavigationProvider = ({ children }: NavigationProviderPropType) => {
 
   const navigationContextValue = {
     modalVisible,
-    changeModalVisible: () => setModalVisible(prev => !prev)
+    changeModalVisible: () => {setModalVisible(prev => !prev); console.log(modalVisible)}
   }
 
   return (

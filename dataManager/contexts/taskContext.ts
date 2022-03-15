@@ -4,12 +4,16 @@ import { ActionType } from '../data/taskReducer';
 
 type TaskContextType = {
   tasks: Array<Task>,
-  dispatch: Dispatch<ActionType>
+  currentTask: Task | null,
+  dispatch: Dispatch<ActionType>,
+  selectTask: (id: number) => void
 }
 
 const TaskContext = createContext<TaskContextType>({
   tasks: [],
-  dispatch: () => {}
+  currentTask: null,
+  dispatch: () => {},
+  selectTask: (id) => {}
 })
 
 export { TaskContext as default, TaskContextType }

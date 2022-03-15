@@ -23,7 +23,7 @@ const markTask: (id: number, value: Boolean) => ActionType = (id, value) => {
   }
 }
 
-const deleteTask: (id: String) => ActionType = (id) => {
+const deleteTask: (id: number) => ActionType = (id) => {
   return {
     type: DELETE_TASK,
     payload: id

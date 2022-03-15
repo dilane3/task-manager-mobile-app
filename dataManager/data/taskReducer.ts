@@ -1,9 +1,9 @@
-import { ADD_TASK, MARK_TASK } from './type';
+import { ADD_TASK, MARK_TASK, DELETE_TASK } from './type';
 import Task from '../../entities/task';
 
 type ActionType = {
   type: String,
-  payload?: String | Boolean | { id: number, value: String | Boolean }
+  payload?: number | String | Boolean | { id: number, value: String | Boolean }
 }
 
 type TaskReducerType = (state: Array<Task>, action: ActionType) => Array<Task>
@@ -50,6 +50,19 @@ const taskReducer: TaskReducerType = (state, action) => {
 
           return stateClone
         }
+      }
+
+      return state
+    }
+
+    case DELETE_TASK: {
+      console.log(action.payload)
+      console.log(state)
+      if (action.payload) {
+        console.log("je suis la")
+        const newState = state.filter(task => task.getId !== action.payload)
+
+        return newState
       }
 
       return state

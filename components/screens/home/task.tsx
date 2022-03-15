@@ -5,14 +5,14 @@ import TaskEntity from '../../../entities/task'
 import { useContext } from "react"
 import taskContext from "../../../dataManager/contexts/taskContext"
 import { markTask } from "../../../dataManager/data/actions"
-import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated"
+import Animated, { Easing, Layout, SlideInRight, SlideOutLeft, SlideOutRight } from "react-native-reanimated"
 import navigationContext from "../../../dataManager/contexts/navigationContext"
 
 type TaskPropType = ({task}: {task: TaskEntity}) => JSX.Element
 
 const Task: TaskPropType = ({ task }) => {
   // Get data from the global state
-  const { dispatch } = useContext(taskContext)
+  const { dispatch, selectTask } = useContext(taskContext)
   const { changeModalVisible } = useContext(navigationContext)
 
   const handleMarkTask = () => {
@@ -20,11 +20,20 @@ const Task: TaskPropType = ({ task }) => {
     dispatch(markTask(task.getId, !task.getMarked))
   }
 
+  const handleSelectTask = () => {
+    // select the task
+    selectTask(task.getId)
+
+    // show the modal
+    changeModalVisible()
+  }
+
   return (
     <Animated.View 
       style={styles.container}
       entering={SlideInRight}
-      exiting={SlideOutLeft}  
+      layout={Layout.springify()}
+      exiting={SlideOutRight.duration(100)}  
     >
       <View style={styles.leftSection}>
         <Switch 
@@ -41,7 +50,7 @@ const Task: TaskPropType = ({ task }) => {
 
       <TouchableOpacity 
         style={styles.taskMenu}  
-        onPress={() => changeModalVisible()}
+        onPress={handleSelectTask}
         activeOpacity={.6}
       >
         <Ionicons
