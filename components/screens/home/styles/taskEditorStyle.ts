@@ -2,6 +2,9 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
+    position: "absolute",
+    top: 80,
+    left: 0,
     width: "100%",
     height: "auto",
     paddingHorizontal: 10,

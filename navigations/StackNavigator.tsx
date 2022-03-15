@@ -24,7 +24,8 @@ const StackNavigator = () => {
             color: "#fff"
           },
           headerTitle: "Tasks Manager",
-          headerShadowVisible: false
+          headerShadowVisible: false,
+          headerShown: true
         }}
       ></Stack.Screen>
     </Stack.Navigator>

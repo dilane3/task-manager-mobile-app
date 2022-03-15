@@ -1,16 +1,19 @@
-import { Switch, Text, View } from "react-native"
+import { Switch, Text, TouchableOpacity, View } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons'
 import styles from "./styles/taskStyle"
 import TaskEntity from '../../../entities/task'
 import { useContext } from "react"
 import taskContext from "../../../dataManager/contexts/taskContext"
 import { markTask } from "../../../dataManager/data/actions"
+import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated"
+import navigationContext from "../../../dataManager/contexts/navigationContext"
 
 type TaskPropType = ({task}: {task: TaskEntity}) => JSX.Element
 
 const Task: TaskPropType = ({ task }) => {
   // Get data from the global state
   const { dispatch } = useContext(taskContext)
+  const { changeModalVisible } = useContext(navigationContext)
 
   const handleMarkTask = () => {
     // Change the state of the task
@@ -18,7 +21,11 @@ const Task: TaskPropType = ({ task }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <Animated.View 
+      style={styles.container}
+      entering={SlideInRight}
+      exiting={SlideOutLeft}  
+    >
       <View style={styles.leftSection}>
         <Switch 
           value={task.getMarked} 
@@ -32,8 +39,17 @@ const Task: TaskPropType = ({ task }) => {
         <Text style={[styles.taskText, task.getMarked && styles.taskMaked]}>{ task.getValue }</Text>
       </View>
 
-      <Ionicons style={styles.taskMenu} name="ellipsis-vertical" />
-    </View>
+      <TouchableOpacity 
+        style={styles.taskMenu}  
+        onPress={() => changeModalVisible()}
+        activeOpacity={.6}
+      >
+        <Ionicons
+          style={styles.taskMenuIcon}
+          name="ellipsis-vertical" 
+        />
+      </TouchableOpacity>
+    </Animated.View>
   )
 }
 

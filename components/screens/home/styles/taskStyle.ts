@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -30,7 +31,14 @@ const styles = StyleSheet.create({
     color: "#828282"
   },
   taskMenu: {
+    width: 50,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 10,
+    borderRadius: 100
+  },
+  taskMenuIcon: {
     fontSize: 20,
   }
 })
