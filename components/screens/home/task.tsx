@@ -2,19 +2,23 @@ import { Switch, Text, TouchableOpacity, useWindowDimensions, View } from "react
 import Ionicons from '@expo/vector-icons/Ionicons'
 import styles from "./styles/taskStyle"
 import TaskEntity from '../../../entities/task'
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import taskContext from "../../../dataManager/contexts/taskContext"
-import { markTask } from "../../../dataManager/data/actions"
+import { deleteTask, markTask } from "../../../dataManager/data/actions"
 import Animated, {
   cond,
   Easing,
+  FadeInUp,
+  FadeOutUp,
   interpolate, 
   interpolateColor, 
   interpolateColors, 
   Layout, 
+  runOnJS, 
   SlideInRight, 
   SlideOutLeft, 
   SlideOutRight, 
+  StretchOutY, 
   useAnimatedGestureHandler, 
   useAnimatedStyle, 
   useSharedValue, 
@@ -33,6 +37,9 @@ const Task: TaskPropType = ({ task }) => {
   // Get data from the global state
   const { dispatch, selectTask } = useContext(taskContext)
   const { changeModalVisible } = useContext(navigationContext)
+
+  // Set local state
+  const [deleted, setDeleted] = useState(false)
 
   // use Dimensions
   const { width: windowWidth } = useWindowDimensions()
@@ -57,6 +64,18 @@ const Task: TaskPropType = ({ task }) => {
     changeModalVisible()
   }
 
+  const handleDeleteTaskWrapper = () => {
+    setDeleted(true)
+  }
+
+  const handleDeleteTaskWrapper2 = (id: number) => {
+    const timer = setTimeout(() => {
+      dispatch(deleteTask(id))
+
+      clearTimeout(timer)
+    }, 300)
+  }
+
   const eventHandler = useAnimatedGestureHandler({
     onStart: (_, context: ContextType) => {
       context.x = translationX.value
@@ -68,7 +87,16 @@ const Task: TaskPropType = ({ task }) => {
       }
     },
     onEnd: () => {
-      translationX.value = withTiming(0, {duration: 300})
+      if (translationX.value >= MINIMUMWIDTH) {
+        runOnJS(handleDeleteTaskWrapper)()
+
+        translationX.value = withTiming(WINDOWWIDTH, {duration: 300})
+
+        runOnJS(handleDeleteTaskWrapper2)(task.getId)
+      } else {
+        translationX.value = withTiming(0, {duration: 300})
+      }
+
     }
   })
 
@@ -79,8 +107,8 @@ const Task: TaskPropType = ({ task }) => {
         {
           translateX: interpolate(
             translationX.value, 
-            [0, MINIMUMWIDTH], 
-            [0, MINIMUMWIDTH], 
+            [0, deleted ? WINDOWWIDTH : MINIMUMWIDTH], 
+            [0, deleted ? WINDOWWIDTH : MINIMUMWIDTH], 
             "clamp" 
           )
         }
@@ -137,7 +165,7 @@ const Task: TaskPropType = ({ task }) => {
       style={styles.container}
       entering={SlideInRight}
       layout={Layout.springify()}
-      exiting={SlideOutRight.duration(100)}    
+      exiting={StretchOutY.duration(500)}    
     >
       <Animated.View 
         style={[taskBackgroundStyle]}
